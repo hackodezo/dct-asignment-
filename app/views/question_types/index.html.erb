@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Question Types</h1>
+
+<table class="ui celled padded table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Show</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @question_types.each do |question_type| %>
+      <tr>
+        <td><%= question_type.name %></td>
+        <td><%= link_to 'Show', question_type %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Question type', new_question_type_path, class: "ui primary button" %><br/><br/>

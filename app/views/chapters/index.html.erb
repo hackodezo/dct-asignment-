@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Chapters</h1>
+
+<table class="ui celled padded table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Show</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @chapters.each do |chapter| %>
+      <tr>
+        <td><%= chapter.name %></td>
+        <td><%= link_to 'Show', chapter %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Chapter', new_chapter_path, class: "ui primary button" %>

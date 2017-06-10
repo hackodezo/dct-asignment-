@@ -1,0 +1,12 @@
+<p id="notice"><%= notice %></p>
+
+<div class="ui segment">
+	<p>
+	  <strong>Name:</strong>
+	  <%= @course.name %>
+	</p>
+
+	<%= link_to 'Edit', edit_course_path(@course), class: "ui button" %>
+	<%= link_to 'Back', courses_path, class: "ui black button" %><br/><br/>
+	<%= link_to 'Destroy', @course, method: :delete, data: { confirm: 'Are you sure?' }, class: "ui red button" %>
+</div>

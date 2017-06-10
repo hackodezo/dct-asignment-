@@ -1,0 +1,42 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+	<strong>Avatar:</strong>
+	<% if @user.avatar.present? %>
+		<br/><%= image_tag @user.avatar_url(:standard) %><br/>
+	<% else %>
+		<%= "This user has not uploaded an avatar yet." %>
+	<% end %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @user.student.try(:name) %>
+</p>
+
+<p>
+	<strong>Email</strong>
+	<%= @user.email %>
+</p>
+
+<p>
+	<strong>Mobile:</strong>
+	<%= @user.student.try(:mobile) %>
+</p>
+
+<% if @user.role == "student" %>
+	<p>
+		<strong>Batches:</strong>
+		<% @user.student.batches.each do |batch| %>
+			<%= batch.title %><br/><br/>
+			<strong>Start Date</strong>
+			<%= batch.start_date %><br/><br/>
+			<strong>End Date</strong>
+			<%= batch.end_date %>
+		<% end %>
+	</p>
+<% end %>
+
+<%= link_to 'Edit', edit_user_path(@user), class: "ui button" %>
+<%= link_to 'Back', users_path, class: "ui black button" %><br/><br/>
+<%= link_to 'Destroy', @user, method: :delete, data: { confirm: 'Are you sure?' }, class: "ui red button" %>

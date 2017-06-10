@@ -1,0 +1,20 @@
+development:
+  cloud_name: detkpeiu4
+  api_key: '365166581214414'
+  api_secret: MCKwzeSRjLXEFvEWhdyF2-z7KJk
+  enhance_image_tag: true
+  static_image_support: false
+
+production:
+  cloud_name: detkpeiu4
+  api_key: '365166581214414'
+  api_secret: MCKwzeSRjLXEFvEWhdyF2-z7KJk
+  enhance_image_tag: true
+  static_image_support: true
+
+test:
+  cloud_name: detkpeiu4
+  api_key: '365166581214414'
+  api_secret: MCKwzeSRjLXEFvEWhdyF2-z7KJk
+  enhance_image_tag: true
+  static_image_support: false

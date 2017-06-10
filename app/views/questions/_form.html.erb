@@ -1,0 +1,54 @@
+<%= nested_form_for(@question) do |f| %>
+  <% if @question.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@question.errors.count, "error") %> prohibited this question from being saved:</h2>
+
+      <ul>
+      <% @question.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :statement %><br>
+        <%= f.text_area :statement, class: "textEditor" %>
+  </div>
+  <div class="field">
+    <label>Select Topic:</label><br>
+    <%= f.collection_select :topic_id, Topic.all, :id, :name, {prompt: "Select topic"}, {class: "ui search dropdown"} %>
+  </div>
+  <div class="field">
+    <label>Select Chapter:</label><br>
+    <%= f.collection_select :chapter_id, Chapter.all, :id, :name, {prompt: "Select chapter"}, {class: "ui search dropdown"}%>
+  </div>
+  <div class="field">
+    <%= f.label :kind %><br>
+    <%= f.radio_button :kind, "assessment" %>Assessment<br/>
+    <%= f.radio_button :kind, "assignment" %>Assignment<br/>
+  </div>
+
+  <div class="field">
+    <%= f.label :question_type_id %><br>
+    <%= f.collection_select :question_type_id, QuestionType.all, :id, :name, {prompt: "Select question type"}, {class: "ui search dropdown"} %>
+  </div>
+
+  <%= f.fields_for :options, @option do |option_form| %>
+    <%= "Option" %><br/>
+    <div class="ui form">
+      <div class="field">
+        <%= option_form.text_area :statement, rows: "2" %><br/>
+      </div>
+    </div>
+    <%= option_form.check_box :is_answer, value: true, class: "ui radio checkbox" %>True
+    <!-- <%#= option_form.radio_button :is_answer, false, class: "ui radio checkbox" %>False --><br/>
+    <%= option_form.link_to_remove "Remove this option" %><br/>
+  <% end %><br/>
+  <%= f.link_to_add "Add option", :options %><br/>
+
+  <br/><br/>
+  <div class="actions">
+    <%= f.submit class: "ui primary button" %><br/><br/>
+  </div>
+<% end %>

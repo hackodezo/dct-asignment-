@@ -1,0 +1,47 @@
+<%= form_for(@batch) do |f| %>
+  <% if @batch.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@batch.errors.count, "error") %> prohibited this batch from being saved:</h2>
+
+      <ul>
+      <% @batch.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title %><br>
+    <div class="ui input"><%= f.text_field :title %></div><br/><br/>
+  </div>
+
+  <div class="field">
+    <%= f.label :start_date %><br>
+    <%= f.date_select :start_date %><br/><br/>
+  </div>
+  <div class="field">
+    <%= f.label :end_date %><br>
+    <%= f.date_select :end_date %>
+    
+    <br/><br/>
+  </div>
+  <div class="field">
+    <%= f.label :course_id %><br>
+    <%= f.collection_select :course_id, Course.all, :id, :name, {prompt: "Select Course"}, {class: "ui search dropdown"} %>
+  </div><br/><br/>
+  
+   <div class="field">
+    <label>Select Students</label><br>
+    <%= f.collection_select :student_ids, Student.all, :id, :name, {prompt: "Select Students"}, {class: "ui fluid search dropdown", multiple: ""} %><br/>
+  </div>
+
+  <div class="field">
+    <label>Completed?</label>
+    <%= f.check_box :complete, class: "ui checkbox" %><br/><br/>
+  </div>
+
+  <div class="actions">
+    <%= f.submit class: "ui primary button" %><br/><br/>
+  </div>
+<% end %>

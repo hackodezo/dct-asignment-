@@ -1,0 +1,63 @@
+<p id="notice"><%= notice %></p>
+
+<div class="ui segment">
+
+  <h3><%= @batch_set.title %></h3>
+
+  <p><strong>Batch:</strong>
+  <%= @batch_set.batch.title %></p>
+
+  <p><strong>Due Date:</strong>
+  <%= @batch_set.date_field %></p>
+
+  <p><strong>Due Time:</strong>
+  <%= @batch_set.time_field %></p>
+
+  <% if current_user.is_admin? %>
+    <p><strong>Set Date:</strong>
+    <%= @batch_set.set_date.strftime("%d-%b-%Y") %></p>
+
+    <p><strong>Kind:</strong>
+    <%= @batch_set.kind %></p>
+  
+    <p>
+      <strong>Students who haven't submitted the answers: </strong><br/>
+      <% if @batch_set_answers.exists? %>
+        <% all_students = [] %>
+        <% answered_students = [] %>
+        <% unanswered_students = [] %>
+        <% @batch_set_answers.where('batch_set_id = ?', @batch_set.id).each do |answer| %>
+          <% answer.batch_set.batch.students.each do |student| %>
+            <% all_students.push(student) %>
+          <% end %>
+        <% end %>
+        <% @batch_set_answers.where('batch_set_id = ?', @batch_set.id).each do |answer| %>
+          <% answered_students.push(answer.user.student) %>
+        <% end %>
+        <% unanswered_students = all_students - answered_students %>
+        <% unanswered_students.uniq.each do |student| %>
+          <%= student.user.avatar.present? ? image_tag(student.user.avatar_url, {class: "ui avatar image"}) : student.name %>,
+        <% end %>
+      <% else %>
+        <%= "Nobody has answered the questions yet." %>
+      <% end %>
+    </p>
+  <% end %>
+
+  <%= link_to 'Back', @batch, class: "ui black button" %><br/><br/>
+  <% if current_user.is_admin? %>
+    <%= link_to 'Edit', edit_batch_batch_set_path(@batch, @batch_set), class: "ui button" %>
+    <%= link_to 'Delete Batch Set', @batch_batch_set, method: :delete, data: { confirm: 'Are you sure?' }, class: "ui red button" %>
+  <% end %>
+
+  <% if current_user.is_student? %>
+
+    <%= render "student_answers" %>
+
+  <% elsif current_user.is_admin? %>
+
+    <%= render "admin_answers" %>
+
+  <% end %>
+
+</div>

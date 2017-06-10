@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <div class="ui container">
+    <head>
+
+      <title>DctAssessment</title>
+      <%= stylesheet_link_tag    'application', media: 'all'%>
+      <%= javascript_include_tag 'application'%>
+      <%= csrf_meta_tags %>
+      
+      <!-- CALENDER -->
+      <script src = "https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js">
+      </script>
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css" rel="stylesheet"> 
+
+      <!-- for ckeditor -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.6.2/ckeditor.js"></script>
+      <script>
+      $(document).ready(function(){
+          CKEDITOR.replaceAll( 'textEditor' );
+      });
+      </script>
+
+      <!-- semantic ui -->
+      <script>
+      $(document).ready(function(){
+        $('.ui.accordion').accordion();
+        $('.ui.dropdown').dropdown();
+        $('.ui.popup').popup();
+      });
+      </script>
+
+    </head>
+    <body>
+      
+      <div class="ui secondary pointing menu">
+        <% if current_user.try(:is_admin?) %>
+          <%= link_to("Users", users_path, class: controller.controller_name == "users" ? "active item" : "item") %>
+          <%= link_to("Students", students_path, class: controller.controller_name == "students" ? "active item" : "item") %>
+          <%= link_to("Courses", courses_path, class: controller.controller_name == "courses" ? "active item" : "item") %>
+          <%= link_to("Topics", topics_path, class: controller.controller_name == "topics" ? "active item" : "item") %>
+          <%= link_to("Chapters", chapters_path, class: controller.controller_name == "chapters" ? "active item" : "item") %>
+          <%= link_to("Batches", batches_path, class: controller.controller_name == "batches" ? "active item" : "item") %>
+          <%= link_to("Questions", questions_path, class: controller.controller_name == "questions" ? "active item" : "item") %>
+          <%= link_to("Question Types", question_types_path, class: controller.controller_name == "question_types" ? "active item" : "item") %>
+          <%= link_to("Remarks", remarks_path, class: controller.controller_name == "remarks" ? "active item" : "item") %>
+        <% elsif current_user.try(:is_student?) %>
+          <%= link_to("Batches", batches_path, class: controller.controller_name == "batches" ? "active item" : "item") %>
+        <% end %>
+
+        <div class="right menu">
+          <% if user_signed_in? %>
+            <% if !current_user.avatar.present? %>
+              <%= link_to("Upload Avatar", users_upload_avatar_path(user: current_user.id), class: controller.controller_name == "registrations" ? "active ui item" : "ui item") %>
+            <% end %> 
+            <%= link_to("Edit Account", edit_user_registration_path, class: controller.controller_name == "registrations" ? "active ui item" : "ui item") %>
+          	<%= link_to("Logout", destroy_user_session_path, method: :delete, class: "ui item") %>
+          <% else %>
+          	<%= link_to("Login", new_user_session_path, class: controller.controller_name == "sessions" ? "active ui item" : "ui item") %>
+          <% end %>
+        </div>
+      </div>
+
+      <p class="alert"><%= alert %></p>
+
+      <%= yield %>
+
+    </body>
+  </div>
+</html>
